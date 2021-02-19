@@ -8,7 +8,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static('build'))
 
-const PORT = 3012
+const PORT = process.env.PORT || 3012
 
 app.use('/api/patients', patientRouter)
 
