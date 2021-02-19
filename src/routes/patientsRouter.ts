@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/await-thenable */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import express from 'express';
+//import express from 'express';
 import {
   addPatient,
   getSecurePatient,
-  // getPatientDetail,
   findById,
   addEntry,
 } from '../services/patientService';
@@ -13,15 +14,18 @@ import {
   toNewHospitalEntry,
   toNewOccupationalHealthcareEntry,
 } from '../utils/entryUtils';
-const router = express.Router();
+import Router from "express-promise-router";
+const router = Router();
 
-router.get('/', (_req, res) => {
-  res.send(getSecurePatient());
+//const router = express.Router();
+
+router.get('/', async (_req, res) => {
+  const patients = await getSecurePatient()
+  res.send(patients);
 });
 
 router.get('/:id', (req, res) => {
   try {
-    // res.send(getPatientDetail());
     res.send(findById(req.params.id));
   } catch (e) {
     if (e instanceof Error) {
@@ -54,7 +58,6 @@ router.post('/', (req, res) => {
 });
 
 router.post('/:id/entries', (req, res) => {
-  //console.log('req.body', req.body);
   try {
     if (req.body.type === 'HealthCheck') {
       const entry = toNewHealthCheckEntry(req.body);
@@ -62,7 +65,6 @@ router.post('/:id/entries', (req, res) => {
       res.json(addedRecord);
     } else if (req.body.type === 'Hospital') {
       const entry = toNewHospitalEntry(req.body);
-      console.log('req.body', entry);
       const addedRecord = addEntry(req.params.id, entry);
       res.json(addedRecord);
     } else if (req.body.type === 'OccupationalHealthcare') {

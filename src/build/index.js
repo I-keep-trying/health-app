@@ -11,7 +11,7 @@ var app = express_1.default();
 app.use(cors_1.default());
 app.use(express_1.default.json());
 app.use(express_1.default.static('build'));
-var PORT = 3012;
+var PORT = process.env.PORT || 3012;
 app.use('/api/patients', patientsRouter_1.default);
 app.use('/api/diagnoses', diagnosesRouter_1.default);
 app.listen(PORT, function () {
