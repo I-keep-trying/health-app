@@ -8,7 +8,7 @@
     "dev": "ts-node-dev src/index.ts",
     "pre-prod": "tsc && node src/build/src/index.js",
     "lint": "eslint --ext .ts .",
-    "start": "node build/index.js",
+    "start": "node src/build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
